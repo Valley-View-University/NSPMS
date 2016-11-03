@@ -15,3 +15,11 @@ They post enrolled applicants to institutions base on their profile.
 
 
     System Requirements
+NSS_
+*A web page for universities to send a list of their final year students as an excel file
+
+*Generate PINs for list of final year student received from universities and sends it back to the schools via email and also send the PINs to each student via SMS and email
+
+*A web page for students to login with their PIN and a voucher code(A NSS voucher card sold for GHS 40.00). After they have been log in they fill a form with the necessary details and submit after which they get a NSS code. 
+
+*A web page for the student to login with their PIN and NSS code to view thier posting status.
