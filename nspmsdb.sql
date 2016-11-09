@@ -1,5 +1,16 @@
 #NSPMS DataBase
 
+CREATE TABLE IF NOT EXISTS `company_info` (
+  `company_id` int(11) NOT NULL AUTO_INCREMENT,
+  `comapny_name` varchar(85) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(85) COLLATE utf8_unicode_ci NOT NULL,
+  `location` varchar(85) COLLATE utf8_unicode_ci NOT NULL,
+  `address` varchar(85) COLLATE utf8_unicode_ci NOT NULL,
+  `phone_number` varchar(85) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`company_id`)
+) 
+
+
 CREATE TABLE nss_admin(
 nsid int(11) PRIMARY KEY AUTO_INCREMENT,
 fname varchar(85),
