@@ -9,3 +9,11 @@ userid varchar(85) UNIQUE,
 password varchar(85),
 tstamp DATETIME NULL
 );
+
+CREATE TABLE institution(
+institution_name varchar (100),
+institutionId varchar PRIMARY KEY,
+city varchar (25),
+email  varchar (25),
+telephone varchar(15),
+);
