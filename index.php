@@ -60,15 +60,15 @@
 	</div>
 	<div class="qlinkbx">
 		<div class="qltopbx"><span class="linkicon checkpost"></span></div>
-		<div class="qlinkname"><span>Postings</span></div>
+		<div class="qlinkname"><span>Check Postings</span></div>
 	</div>
 	<div class="qlinkbx">
 		<div class="qltopbx"><span class="linkicon company"></span></div>
-		<div class="qlinkname"><span>Sign up Company</span></div>
+		<div class="qlinkname"><span>Sign up your Company</span></div>
 	</div>
 	<div class="qlinkbx">
 		<div class="qltopbx"><span class="linkicon school"></span></div>
-		<div class="qlinkname"><span>Student List</span></div>
+		<div class="qlinkname"><span>Upload Student List</span></div>
 	</div>
 
 </div>
