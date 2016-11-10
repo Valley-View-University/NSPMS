@@ -21,22 +21,37 @@ password varchar(85),
 tstamp DATETIME NULL
 );
 
-CREATE TABLE institution(
+CREATE TABLE institution(  
 institution_name varchar (100),
-institutionId varchar PRIMARY KEY,
+inid varchar PRIMARY KEY,
 city varchar (25),
 email  varchar (25),
-telephone varchar(15),
+telephone varchar(15)
 );
 
 CREATE TABLE student(
-fname char(45),
-mname char(45), 
-lname char(45),
-userid varchar(85) PRIMARY KEY AUTO_INCREMENT,
+fname varchar(45),
+mname varchar(45), 
+lname varchar(45),
+sid int(11) PRIMARY KEY AUTO_INCREMENT,
+studentid int(15),  
 password varchar(85),
 email varchar(72),
 telephone int(15),
 institution_name varchar(100),
-nsid int(11) FOREIGN KEY,  
+nss_code varchar(45),
+nationality varchar(45),
+dob date,
+pin varchar(30),  
+gender enum('F','M'),
+raddress varchar(100),
+kin_name varchar(100),
+kin_address varchar(100),
+kin_telephone varchar(15),
+kin_relationship varchar(20),
+kin_email varchar(72),  
+avatar varchar(100),  
+course_study varchar(50),
+on_leave enum('Y','N'),
+organization_name varchar(100)  
 );
