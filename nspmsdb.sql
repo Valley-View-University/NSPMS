@@ -28,3 +28,15 @@ city varchar (25),
 email  varchar (25),
 telephone varchar(15),
 );
+
+CREATE TABLE student(
+fname char(45),
+mname char(45), 
+lname char(45),
+userid varchar(85) PRIMARY KEY AUTO_INCREMENT,
+password varchar(85),
+email varchar(72),
+telephone int(15),
+institution_name varchar(100),
+nsid int(11) FOREIGN KEY,  
+);
