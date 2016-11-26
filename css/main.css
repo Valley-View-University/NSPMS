@@ -184,3 +184,104 @@ body{
 .school:before{
 	content: "\f19d";
 }
+#main{
+	width: 100%;
+	height: 450px;
+}
+#student{
+	width:500px;
+	height:210px;
+	margin: 0 auto;
+	margin-top: 55px;
+}
+#log{
+	 font-family: "exo";
+     text-transform: capitalize;
+     font-size:20px;
+}
+.studntidf{
+	width: 410px;
+	height: 40px;
+	margin-left: 50px;
+	margin-top: 20px;
+	float: left;
+}
+#submit{
+    width: 300px;
+    height: 35px;
+    margin: 0 21%;
+    float: left;
+    font-family: "exo";
+    margin-top: 20px;
+    background-color: #adad44;
+    cursor: pointer;
+     border: 4px solid rgba(138, 115, 12, 0.31);
+    text-transform: capitalize;
+}
+.stdntf{
+ width:300px;
+ height: 35px;
+ padding-left: 4px;
+ margin: 0 auto;
+ font-family: "exo";
+ font-color: #c7c74b;
+ text-transform: capitalize;
+}
+#one{
+	width:100%;
+	float:left;
+	text-align: center;
+}
+#form{
+	width: 1000px;
+	min-height: 100px;
+	margin: 0 auto;
+	margin-top: 20px;
+}
+.finfo{
+	width: 100%;
+	height: 50px;
+	margin-top: 20px;
+	float: left;
+}
+.info{
+	width: 200px;
+	height: 40px;
+	float: left;
+	margin-top: 7px;
+	text-transform: capitalize;
+}
+.drop{
+	width: 305px;
+	height: 40px;
+	text-transform: capitalize;
+}
+.field{
+	width: 400px;
+	height: 30px;
+	margin: 0 auto;
+}
+.dob{
+	width: 500px;
+	height: 40px;
+	float: left;
+}
+.day{
+	width: 100px;
+	height: 40px;
+	float: left;
+	margin-left: 5px;
+	text-transform: capitalize;
+}
+.sub{
+	width: 100px;
+    height: 40px;
+    margin: 0 50%;
+    float: left;
+    font-family: "exo";
+    margin-top: 10px;
+    margin-bottom: 50px;
+    cursor: pointer;
+    border: 4px solid rgba(138, 115, 12, 0.12);
+    text-transform: capitalize;
+}

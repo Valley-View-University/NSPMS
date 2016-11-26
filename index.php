@@ -54,10 +54,10 @@
 	</div>
 </div>
 <div id="qicklnks">
-	<div class="qlinkbx">
+	<a href="student.php"><div class="qlinkbx">
 		<div class="qltopbx"><span class="linkicon regicon"></span></div>
 		<div class="qlinkname"><span>Enroll</span></div>
-	</div>
+	</div></a>
 	<div class="qlinkbx">
 		<div class="qltopbx"><span class="linkicon checkpost"></span></div>
 		<div class="qlinkname"><span>Check Postings</span></div>
