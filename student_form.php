@@ -1,5 +1,11 @@
 <?php
 
+session_start();
+
+if (empty($_SESSION['sid']) == true) {
+	header("Location:student.php");
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -14,6 +20,7 @@
 	<div id="contbx">
 		<div id="topbanner">
 			<div id="logobx"></div>
+			<a href="inc/logout.php"><button class="log" name="logout" type="submit">Logout</button></a>
 		</div>
 	</div>
 </div>

@@ -1,3 +1,12 @@
+<?php
+
+session_start();
+if (empty($_SESSION['sid']) == false) {
+	header("Location:student_form.php");
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
