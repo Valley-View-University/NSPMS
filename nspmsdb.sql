@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `company_info` (
   `address` varchar(85) COLLATE utf8_unicode_ci NOT NULL,
   `phone_number` varchar(85) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`company_id`)
-) 
+) ;
 
 
 CREATE TABLE nss_admin(
@@ -23,7 +23,7 @@ tstamp DATETIME NULL
 
 CREATE TABLE institution(  
 institution_name varchar (100),
-inid varchar PRIMARY KEY,
+inid varchar (12) PRIMARY KEY,
 city varchar (25),
 email  varchar (25),
 telephone varchar(15)
