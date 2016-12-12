@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
+-- version 4.5.2
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 28, 2016 at 11:44 AM
--- Server version: 5.6.17
--- PHP Version: 5.5.12
+-- Generation Time: Dec 12, 2016 at 06:32 PM
+-- Server version: 5.7.9
+-- PHP Version: 5.6.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `nspms`
@@ -23,14 +23,46 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `company`
+--
+
+DROP TABLE IF EXISTS `company`;
+CREATE TABLE IF NOT EXISTS `company` (
+  `cid` int(11) NOT NULL AUTO_INCREMENT,
+  `cname` varchar(80) NOT NULL,
+  `cpass` varchar(80) NOT NULL,
+  `added` datetime NOT NULL,
+  PRIMARY KEY (`cid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `company_request`
+--
+
+DROP TABLE IF EXISTS `company_request`;
+CREATE TABLE IF NOT EXISTS `company_request` (
+  `crid` int(11) NOT NULL AUTO_INCREMENT,
+  `cid` int(11) NOT NULL,
+  `oid` int(11) NOT NULL,
+  `number` int(11) NOT NULL,
+  `added` datetime NOT NULL,
+  PRIMARY KEY (`crid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `marital_status`
 --
 
+DROP TABLE IF EXISTS `marital_status`;
 CREATE TABLE IF NOT EXISTS `marital_status` (
   `msid` int(11) NOT NULL AUTO_INCREMENT,
   `status` varchar(85) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`msid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `marital_status`
@@ -45,9 +77,83 @@ INSERT INTO `marital_status` (`msid`, `status`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `options`
+--
+
+DROP TABLE IF EXISTS `options`;
+CREATE TABLE IF NOT EXISTS `options` (
+  `oid` int(11) NOT NULL AUTO_INCREMENT,
+  `options` varchar(80) NOT NULL,
+  PRIMARY KEY (`oid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `posting`
+--
+
+DROP TABLE IF EXISTS `posting`;
+CREATE TABLE IF NOT EXISTS `posting` (
+  `pid` int(11) NOT NULL AUTO_INCREMENT,
+  `sid` int(11) NOT NULL,
+  `rid` int(11) NOT NULL,
+  `oid` int(11) NOT NULL,
+  `added` datetime NOT NULL,
+  PRIMARY KEY (`pid`),
+  UNIQUE KEY `sid` (`sid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `region`
+--
+
+DROP TABLE IF EXISTS `region`;
+CREATE TABLE IF NOT EXISTS `region` (
+  `rid` int(11) NOT NULL AUTO_INCREMENT,
+  `rname` varchar(80) NOT NULL,
+  PRIMARY KEY (`rid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `school`
+--
+
+DROP TABLE IF EXISTS `school`;
+CREATE TABLE IF NOT EXISTS `school` (
+  `shid` int(11) NOT NULL AUTO_INCREMENT,
+  `sname` varchar(80) NOT NULL,
+  `spassword` varchar(80) NOT NULL,
+  `added` datetime NOT NULL,
+  PRIMARY KEY (`shid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `schoolfiles`
+--
+
+DROP TABLE IF EXISTS `schoolfiles`;
+CREATE TABLE IF NOT EXISTS `schoolfiles` (
+  `sfid` int(11) NOT NULL AUTO_INCREMENT,
+  `files` varchar(80) NOT NULL,
+  `year` varchar(4) NOT NULL,
+  `added` datetime NOT NULL,
+  PRIMARY KEY (`sfid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `studentinfo`
 --
 
+DROP TABLE IF EXISTS `studentinfo`;
 CREATE TABLE IF NOT EXISTS `studentinfo` (
   `sid` int(11) NOT NULL AUTO_INCREMENT,
   `studentid` varchar(85) COLLATE utf8_unicode_ci NOT NULL,
@@ -65,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `studentinfo` (
   `instituition` varchar(85) COLLATE utf8_unicode_ci NOT NULL,
   `time` timestamp NOT NULL,
   PRIMARY KEY (`sid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `studentinfo`
@@ -77,9 +183,31 @@ INSERT INTO `studentinfo` (`sid`, `studentid`, `fname`, `lname`, `mname`, `progr
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `student_request`
+--
+
+DROP TABLE IF EXISTS `student_request`;
+CREATE TABLE IF NOT EXISTS `student_request` (
+  `srid` int(11) NOT NULL AUTO_INCREMENT,
+  `sid` int(11) NOT NULL,
+  `region1` int(11) NOT NULL,
+  `region2` int(11) NOT NULL,
+  `region3` int(11) NOT NULL,
+  `option1` int(11) NOT NULL,
+  `option2` int(11) NOT NULL,
+  `option3` int(11) NOT NULL,
+  `added` datetime NOT NULL,
+  PRIMARY KEY (`srid`),
+  UNIQUE KEY `sid` (`sid`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `voucher`
 --
 
+DROP TABLE IF EXISTS `voucher`;
 CREATE TABLE IF NOT EXISTS `voucher` (
   `vid` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(85) COLLATE utf8_unicode_ci NOT NULL,
@@ -87,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `voucher` (
   `sid` int(11) NOT NULL,
   `time` timestamp NOT NULL,
   PRIMARY KEY (`vid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=101 ;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `voucher`
