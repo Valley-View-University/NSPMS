@@ -78,7 +78,7 @@ $vouchernum = $_POST['vouchernum'];
 <div id="runner">
 	<div id="contbx">
 		<div id="topbanner">
-			<div id="logobx"></div>
+			<a href="index.php"><div id="logobx"></div></a>
 		</div>
 	</div>
 </div>
