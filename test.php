@@ -39,15 +39,9 @@
     
 
 // }
-<<<<<<< HEAD
 
 // echo voucher($link, $link1);
 
 
-echo md5('admin');
-=======
->>>>>>> 6a706a179420c952b6c0e5bec0e1857cb00c2cbe
-
-// echo voucher($link, $link1);
 echo md5('admin');
 ?>

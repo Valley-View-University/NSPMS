@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'connect.php';
+require 'inc/connect.php';
 
 $loge= 0;$error ='';
 if(isset($_POST['submit'])){
@@ -14,13 +14,16 @@ if(isset($_POST['submit'])){
         $loge++;
     }
     if($loge == 0){
-    	$q = mysqli_query($link, "SELECT aid FROM admin WHERE username='$username' AND password='$password' ");
+    	$passwordx = md5($password);
+    	$q = mysqli_query($link, "SELECT aid FROM admin WHERE username='$username' AND password='$passwordx' ");
     	$n = mysqli_num_rows($q);
     	if($n == 0){
     		$error = "invalid username and password combination";
     	}
     	else{
-    		
+    		$ar = mysqli_fetch_assoc($q);
+    		$_SESSION['aid'] = $ar['aid'];
+    		header("location: admin_hub.php");
     	}
     }
     else{
@@ -53,7 +56,7 @@ if(isset($_POST['submit'])){
 			<div id="one"><input name="username" type="text" placeholder="Username" class="stdntf" required/></div>
 		</div>
 		<div style="margin-top:20px;" class="studntidf">
-			<div id="one"><input name="password" type="text" placeholder="Password"class="stdntf" required/></div>
+			<div id="one"><input name="password" type="password" placeholder="Password"class="stdntf" required/></div>
 		</div>
 		<div style="color:red; margin-top:10px;" id="one"><?php echo $error;?></div>
 		<div id="one"><button name="submit" id="submit"type="submit">submit</button></div>

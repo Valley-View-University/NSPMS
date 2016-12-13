@@ -1,5 +1,5 @@
 <?php 
-require 'connect.php';
+require 'inc/connect.php';
 require 'inc/clean.inc';
 $errorx=$options ='';
   $getsch = mysqli_query($link, "SELECT * FROM school ORDER BY sname ASC");
