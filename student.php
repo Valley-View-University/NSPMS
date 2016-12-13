@@ -11,7 +11,7 @@ if (!$link) {
     die('Could not connect: ' . mysql_error());
 }
 
-$loge= $error ='';
+$loge= 0;$error ='';
 
 if (isset($_POST['submit'])) {
 	

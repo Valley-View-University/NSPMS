@@ -2,8 +2,31 @@
 session_start();
 require 'connect.php';
 
-$error ='';
+$loge= 0;$error ='';
+if(isset($_POST['submit'])){
+	$username = $_POST['username'];
+	$password = $_POST['password'];
 
+	if(empty($username) == true){
+        $loge++;
+    }
+    if(empty($password) == true){
+        $loge++;
+    }
+    if($loge == 0){
+    	$q = mysqli_query($link, "SELECT aid FROM admin WHERE username='$username' AND password='$password' ");
+    	$n = mysqli_num_rows($q);
+    	if($n == 0){
+    		$error = "invalid username and password combination";
+    	}
+    	else{
+    		
+    	}
+    }
+    else{
+    	$error = "invalid username and password combination";
+    }
+}
 
 ?>
 
