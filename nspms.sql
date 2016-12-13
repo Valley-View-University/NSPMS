@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
+-- version 4.5.2
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 13, 2016 at 02:03 AM
--- Server version: 5.6.17
--- PHP Version: 5.5.12
+-- Generation Time: Dec 13, 2016 at 01:42 AM
+-- Server version: 5.7.9
+-- PHP Version: 5.6.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,7 +14,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `nspms`
@@ -23,16 +23,40 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `admin`
+--
+
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE IF NOT EXISTS `admin` (
+  `aid` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(80) NOT NULL,
+  `password` varchar(80) NOT NULL,
+  `added` datetime NOT NULL,
+  PRIMARY KEY (`aid`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`aid`, `username`, `password`, `added`) VALUES
+(1, 'admin', '21232f297a57a5a743894a0e4a801fc3', '2016-12-12 00:00:00');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `company`
 --
 
+DROP TABLE IF EXISTS `company`;
 CREATE TABLE IF NOT EXISTS `company` (
   `cid` int(11) NOT NULL AUTO_INCREMENT,
   `cname` varchar(80) NOT NULL,
   `cpass` varchar(80) NOT NULL,
   `added` datetime NOT NULL,
   PRIMARY KEY (`cid`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -40,6 +64,7 @@ CREATE TABLE IF NOT EXISTS `company` (
 -- Table structure for table `company_request`
 --
 
+DROP TABLE IF EXISTS `company_request`;
 CREATE TABLE IF NOT EXISTS `company_request` (
   `crid` int(11) NOT NULL AUTO_INCREMENT,
   `cid` int(11) NOT NULL,
@@ -47,7 +72,7 @@ CREATE TABLE IF NOT EXISTS `company_request` (
   `number` int(11) NOT NULL,
   `added` datetime NOT NULL,
   PRIMARY KEY (`crid`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -55,11 +80,12 @@ CREATE TABLE IF NOT EXISTS `company_request` (
 -- Table structure for table `marital_status`
 --
 
+DROP TABLE IF EXISTS `marital_status`;
 CREATE TABLE IF NOT EXISTS `marital_status` (
   `msid` int(11) NOT NULL AUTO_INCREMENT,
   `status` varchar(85) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`msid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `marital_status`
@@ -77,13 +103,14 @@ INSERT INTO `marital_status` (`msid`, `status`) VALUES
 -- Table structure for table `nationality`
 --
 
+DROP TABLE IF EXISTS `nationality`;
 CREATE TABLE IF NOT EXISTS `nationality` (
   `nid` int(11) NOT NULL AUTO_INCREMENT,
   `country` varchar(80) NOT NULL,
   `nationality` varchar(80) NOT NULL,
   `noun` varchar(80) NOT NULL,
   PRIMARY KEY (`nid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=226 ;
+) ENGINE=MyISAM AUTO_INCREMENT=226 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `nationality`
@@ -322,11 +349,12 @@ INSERT INTO `nationality` (`nid`, `country`, `nationality`, `noun`) VALUES
 -- Table structure for table `options`
 --
 
+DROP TABLE IF EXISTS `options`;
 CREATE TABLE IF NOT EXISTS `options` (
   `oid` int(11) NOT NULL AUTO_INCREMENT,
   `options` varchar(80) NOT NULL,
   PRIMARY KEY (`oid`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -334,6 +362,7 @@ CREATE TABLE IF NOT EXISTS `options` (
 -- Table structure for table `posting`
 --
 
+DROP TABLE IF EXISTS `posting`;
 CREATE TABLE IF NOT EXISTS `posting` (
   `pid` int(11) NOT NULL AUTO_INCREMENT,
   `sid` int(11) NOT NULL,
@@ -342,7 +371,7 @@ CREATE TABLE IF NOT EXISTS `posting` (
   `added` datetime NOT NULL,
   PRIMARY KEY (`pid`),
   UNIQUE KEY `sid` (`sid`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -350,11 +379,12 @@ CREATE TABLE IF NOT EXISTS `posting` (
 -- Table structure for table `region`
 --
 
+DROP TABLE IF EXISTS `region`;
 CREATE TABLE IF NOT EXISTS `region` (
   `rid` int(11) NOT NULL AUTO_INCREMENT,
   `rname` varchar(80) NOT NULL,
   PRIMARY KEY (`rid`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -362,13 +392,14 @@ CREATE TABLE IF NOT EXISTS `region` (
 -- Table structure for table `school`
 --
 
+DROP TABLE IF EXISTS `school`;
 CREATE TABLE IF NOT EXISTS `school` (
   `shid` int(11) NOT NULL AUTO_INCREMENT,
   `sname` varchar(80) NOT NULL,
   `spassword` varchar(80) NOT NULL,
   `added` datetime NOT NULL,
   PRIMARY KEY (`shid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `school`
@@ -384,23 +415,10 @@ INSERT INTO `school` (`shid`, `sname`, `spassword`, `added`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `schoolfiles`
---
-
-CREATE TABLE IF NOT EXISTS `schoolfiles` (
-  `sfid` int(11) NOT NULL AUTO_INCREMENT,
-  `files` varchar(80) NOT NULL,
-  `year` varchar(4) NOT NULL,
-  `added` datetime NOT NULL,
-  PRIMARY KEY (`sfid`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `studentinfo`
 --
 
+DROP TABLE IF EXISTS `studentinfo`;
 CREATE TABLE IF NOT EXISTS `studentinfo` (
   `sid` int(11) NOT NULL AUTO_INCREMENT,
   `studentid` varchar(85) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -429,15 +447,15 @@ CREATE TABLE IF NOT EXISTS `studentinfo` (
   `time` timestamp NULL DEFAULT NULL,
   `year` varchar(4) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`sid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `studentinfo`
 --
 
 INSERT INTO `studentinfo` (`sid`, `studentid`, `fname`, `lname`, `mname`, `program`, `email`, `dob`, `phonenum`, `gender`, `msid`, `nid`, `resaddress`, `instituition`, `next_of_kin_name`, `kin_contact`, `kin_email`, `kin_address`, `kin_relationship`, `avatar`, `study_leave`, `organization_contact`, `disability`, `disability_type`, `time`, `year`) VALUES
-(1, '214cs01001767', 'bright', 'asare', 'bright', 'Bsc.computer science', 'asarebright81@gmail.com', '2015-10-01', '0208499091', 'm', 1, NULL, 'hse no 10', 0, '0', '0', '0', '0', '0', '', '0', '', '0', '', '2016-11-23 17:49:08', ''),
-(2, ' 214cs01001767', ' bright', 'Boamah', 'kofi', 'Bsc.Computer Science', ' kofiboamah@gmail.com ', NULL, '208499091', 'm', 0, NULL, ' hse n0 10', 0, '', '', '', '', '', '', '0', '', '0', '', NULL, '');
+(1, '214cs01001767', 'bright', 'asare', 'bright', 'Bsc.computer science', 'asarebright81@gmail.com', '2015-10-01', '0208499091', 'm', 1, 81, 'hse no 10', 0, '0', '0', '0', '0', '0', '', '0', '', '0', '', '2016-11-23 17:49:08', ''),
+(2, ' 214cs01001767', ' bright', 'Boamah', 'kofi', 'Bsc.Computer Science', ' kofiboamah@gmail.com ', NULL, '208499091', 'm', 0, 81, ' hse n0 10', 0, '', '', '', '', '', '', '0', '', '0', '', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -445,6 +463,7 @@ INSERT INTO `studentinfo` (`sid`, `studentid`, `fname`, `lname`, `mname`, `progr
 -- Table structure for table `student_request`
 --
 
+DROP TABLE IF EXISTS `student_request`;
 CREATE TABLE IF NOT EXISTS `student_request` (
   `srid` int(11) NOT NULL AUTO_INCREMENT,
   `sid` int(11) NOT NULL,
@@ -457,7 +476,7 @@ CREATE TABLE IF NOT EXISTS `student_request` (
   `added` datetime NOT NULL,
   PRIMARY KEY (`srid`),
   UNIQUE KEY `sid` (`sid`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -465,6 +484,7 @@ CREATE TABLE IF NOT EXISTS `student_request` (
 -- Table structure for table `voucher`
 --
 
+DROP TABLE IF EXISTS `voucher`;
 CREATE TABLE IF NOT EXISTS `voucher` (
   `vid` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(85) COLLATE utf8_unicode_ci NOT NULL,
@@ -472,7 +492,7 @@ CREATE TABLE IF NOT EXISTS `voucher` (
   `sid` int(11) NOT NULL,
   `time` timestamp NOT NULL,
   PRIMARY KEY (`vid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=102 ;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `voucher`
@@ -578,8 +598,7 @@ INSERT INTO `voucher` (`vid`, `code`, `status`, `sid`, `time`) VALUES
 (97, 'a068d270496aa6e8e7e778e85b8ce717', '0', 0, '2016-11-25 12:30:29'),
 (98, 'c651afe72c52b6e22765db2b06b454d1', '0', 0, '2016-11-25 12:30:30'),
 (99, '704980e8bdf7f61d5520d789b8049827', '0', 0, '2016-11-25 12:30:31'),
-(100, '53a00c254a6699191b0cdc9ebaa491c0', '0', 0, '2016-11-25 12:30:32'),
-(101, '8a11c69c7b0bc248889a2df8b0e393ad', '0', 0, '2016-12-12 23:27:09');
+(100, '53a00c254a6699191b0cdc9ebaa491c0', '0', 0, '2016-11-25 12:30:32');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
