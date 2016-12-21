@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
 	$mstatus = $_POST['mstatus'];
 	$nationality = $_POST['nationality'];
 	$phone = $_POST['phone'];
-	$email = test_input($_POST["email"]);
+	$email = $_POST["email"];
 	$address = $_POST['address'];
 	$institution = $_POST['institution'];
 	$program = $_POST['program'];
@@ -146,30 +146,20 @@ if (isset($_POST['submit'])) {
 	$hconname = $_POST['hconname'];
 	$photograph = $_POST['photograph'];
 
-    if (!empty($studentid) == true) {
-    	$studentid = $_POST['studentid'];
+    if (empty($studentid) == true) {
+    	$error .= "Enter Student ID";
     }
-    else{
-    	$error .= "cannot be empty";
-    }
-
-	$email = $_POST['email'];
 	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-		$error .= "email format invalid";;
+		$error .= "email format invalid<br>";
 	}
-	else{
-		$email = $_POST['email'];
-	}
-
 	if (empty($fname) == true) {
-		$error .= "enter student id";
+		$error .= "enter First name<br>";
 	}
-	else{
-
-   		if (!preg_match("/^[a-zA-Z]*$/",$fname)) {
-   			$error .= "only letters allowed";
-   		}
-		$fname = $_POST['fname'];
+	if (empty($lname) == true) {
+		$error .= "enter Last name<br>";
+	}
+	if (empty($day) == true) {
+		$error .= "select day  name<br>";
 	}
 
 
