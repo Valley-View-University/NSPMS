@@ -251,7 +251,7 @@ body{
 }
 .finfo{
 	width: 100%;
-	height: 50px;
+	min-height: 50px;
 	margin-top: 20px;
 	float: left;
 	text-transform: capitalize;
@@ -322,4 +322,8 @@ body{
     height: 40px;
     float: left;
     text-transform: capitalize;
+}
+.finfo1{
+	min-height:100px;
+	margin-top:10px;
 }
