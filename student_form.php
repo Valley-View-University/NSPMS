@@ -6,6 +6,8 @@ if (empty($_SESSION['sid']) == true) {
 	header("Location:student.php");
 }
 
+$sid = $_SESSION['sid'];
+
 $link = mysqli_connect('localhost','root', '', 'nspms');
 if (!$link) {
     die('Could not connect: ' . mysql_error());
@@ -19,7 +21,7 @@ $year = date('Y', time());
 		$dobyr .= '<option value="'.$i.'">'.$i.'</option>';
 	}
 
-$studetid=$fname=$lname=$mname=$dob=$gender=$mstatus=$nationality=$program=$optio=$email=$instituition=$address=$phone=$options=$option=$regi=$option1=$amstatus='';
+$studetid=$fname=$img1error=$lname=$mname=$dob=$gender=$mstatus=$done=$nationality=$error=$program=$optio=$email=$instituition=$address=$phone=$options=$option=$regi=$option1=$amstatus='';
 
 $mars = mysqli_query($link,"SELECT * FROM marital_status ORDER BY status ASC");
 $rmars = mysqli_num_rows($mars);
@@ -35,7 +37,7 @@ if ($opqr!=0) {
 	$optio ='';
 	while ($oti = mysqli_fetch_array($opq, MYSQLI_ASSOC)) {
 		$optio .='	<div class="opt">
-	 					<input style="float:left;" type="checkbox" name="cop1[]" value="'.$oti['oid'].'" />
+	 					<input style="float:left;" type="checkbox" data-parsley-maxcheck="3" data-parsley-mincheck="3" name="cop1[]" value="'.$oti['oid'].'" />
 	 						<span>'.$oti['options'].'</span>
 					</div>';
 	}
@@ -51,7 +53,7 @@ if ($regr!=0) {
 
 $mars1 = mysqli_query($link,"SELECT * FROM nationality ORDER BY nationality ASC");
 $rmars1 = mysqli_num_rows($mars1);
-if ($rmars1!=0) {
+if ($rmars1 != 0) {
 	while ($all1 = mysqli_fetch_array($mars1, MYSQLI_ASSOC)) {
 		$option .= '<option value="'.$all1['nid'].'">'.$all1['nationality'].'</option>';
 	}
@@ -91,8 +93,12 @@ if ($rmars2!=0) {
 	}
 	$mstatus = $result['msid'];
 	$aquery = mysqli_query($link,"SELECT * FROM marital_status WHERE msid='$mstatus' ");
-    $ar = mysqli_fetch_assoc($aquery);
-    $amstatus = $ar['status'];
+    $ar = mysqli_num_rows($aquery);
+	if ($ar==1) {
+	while ($mstatus = mysqli_fetch_array($aquery, MYSQLI_ASSOC)) {
+		$optionmad= '<option value="'.$mstatus['msid'].'">'.$mstatus['status'].'</option>';
+	}
+		}
 
     $nationality = $result['nid'];
 	$aquery1 = mysqli_query($link,"SELECT * FROM nationality WHERE nid='$nationality' ");
@@ -116,7 +122,6 @@ if (isset($_POST['submit'])) {
 
 	$error='';
 
-	$studentid = $_POST['studentid'];
 	$fname = $_POST['fname'];
 	$lname = $_POST['lname'];
 	$mname = $_POST['mname'];
@@ -129,53 +134,103 @@ if (isset($_POST['submit'])) {
 	$phone = $_POST['phone'];
 	$email = $_POST["email"];
 	$address = $_POST['address'];
-	$institution = $_POST['institution'];
-	$program = $_POST['program'];
 	$nameofn = $_POST['nameofn'];
 	$kinsp = $_POST['kinsp'];
 	$relationship = $_POST['relationship'];
 	$kinsemail = $_POST['kinsemail'];
-	$studyl = $_POST['studyl'];
-	$study2 = $_POST['study2'];
-	$organization = $_POST['organization'];
-	$contacttel = $_POST['contacttel'];
 	$region1 = $_POST['region1'];
 	$region2 = $_POST['region2'];
 	$region3 = $_POST['region3'];
-	$hcondition = $_POST['hcondition'];
-	$hconname = $_POST['hconname'];
-	$photograph = $_POST['photograph'];
 
-    if (empty($studentid) == true) {
-    	$error .= "Enter Student ID";
+	$photograph = $_FILES['photograph']['name'];
+	$photosize = $_FILES['photograph']['size'];
+	$phototemp = $_FILES['photograph']['tmp_name'];
+
+if(empty($photograph) == false){
+    $imgupdt = checkimage($link,$photograph,$photosize);
+    if($imgupdt == 0){
+        $img1error ='<span style="color:red;width: 100%;text-align: center;float: left;">Invalid file format(Allowed png,jpg,jpeg)</span>';
     }
-	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-		$error .= "email format invalid<br>";
-	}
-	if (empty($fname) == true) {
-		$error .= "enter First name<br>";
-	}
-	if (empty($lname) == true) {
-		$error .= "enter Last name<br>";
-	}
-	if (empty($day) == true) {
-		$error .= "select day  name<br>";
-	}
+    else if($imgupdt == 2){
+        $img1error ='<span style="color:red;width: 100%;text-align: center;float: left;">Image size too big (Max image size 2MB)</span>';
+    }
+}
 
 
+    if ($region1 == $region2 || $region1 == $region3 || $region2 == $region3) {
+    	$error ='<span style="color:red;width: 100%;text-align: center;float: left;">select three different regions</span>';
+    }
+    else{
 
-	
+    	$avartar = uploadimage($link,$photograph,$phototemp);
+    	if ($avartar == 0) {
+    		$nwavat = NULL;
+    	}
+    	else{
+    		$nwavat = $avartar;
+    	}
 
-	$countx = 0;
-	foreach($_POST['cop1'] as $optionx) {
-		$countx++;
-	}
+    	$yearx = date("Y",time());
+    	$dob = $year.'-'.$month.'-'.$day;
+    	$querry = mysqli_query($link, "UPDATE studentinfo SET fname='$fname',lname='$lname',mname='$mname',dob='$dob',gender='$gender',msid='$mstatus',nid='$nationality',next_of_kin_name='$nameofn',kin_contact='$kinsp',kin_email='$kinsemail',kin_relationship='$relationship',avatar='$nwavat',time=now(),year='$yearx' WHERE sid='$sid'");
 
-	if ($countx != 3) {
-		$error .= "please select three options only!!!";
-	}
+    	if ($querry) {
+    		$count = 1;
+    		foreach ($_POST['cop1'] as $optionx) {
+    			if($count == 1){
+    				$option1x = $optionx;
+    			}
+    			else if($count == 2){
+    				$option2x = $optionx;
+    			}
+    			else if($count == 3){
+    				$option3x = $optionx;
+    			}
+    			$count++;
+    		}
+    		$deq = mysqli_query($link,"DELETE FROM student_request WHERE sid='$sid'");
+    		$querry2 = mysqli_query($link,"INSERT INTO student_request(`sid`,`region1`,`region2`,`region3`,`option1`,`option2`,`option3`,`added`) VALUES('$sid','$region1','$region2','$region3','$option1x','$option2x','$option3x',now())");
+
+    		if ($querry2) {
+    			$done = '<span style="color:green;font-size:25px;width: 100%;text-align: center;float: left;">successful</span>';
+    		}
+    		else{
+    			$done = '<span style="color:red;width:100%;font-size:25px;text-align: center;float: left;">error could not insert</span>';
+    		}
+    	}
+    	else{
+    		$done = '<span style="color:red;width:100%;font-size:25px;text-align: center;float: left;">error could not insert</span>';
+    	}
+    }
+
+}
 
 
+function checkimage($link,$imagename,$imgsize){
+    $allow = array('jpg','jpeg','png');
+    $bits = explode('.',$imagename);
+    $file_extn = strtolower(end($bits));
+    if(in_array($file_extn, $allow) == false){
+        return '0';
+    }
+    else if($imgsize > 250000000){
+        return '2';
+    }
+    else{
+        return '1';
+    }
+}
+function uploadimage($link,$imagename,$imagetmp){
+    $allow = array('jpg','jpeg','png');
+    $bits = explode('.',$imagename);
+    $file_extn = strtolower(end($bits));
+    $filename = 'cant'.substr(md5(time().rand(10000,99999)), 0, 15).'.'.$file_extn;
+    $fullpath = 'avatar/'.$filename;
+        $move = move_uploaded_file($imagetmp ,$fullpath) ;
+        if(!$move){
+            return '0';
+        }
+        return $filename;
 }
 
 ?>
@@ -184,7 +239,10 @@ if (isset($_POST['submit'])) {
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="css/main.css">
+<script src="js/jquery-2.1.1.min.js"></script>
 <link rel="stylesheet" href="css/font-awesome.css">
+<link rel="stylesheet" href="css/parsley.css"> 
+<script src="js/parsley.js"></script>
 </head>
 
 <body>
@@ -196,19 +254,16 @@ if (isset($_POST['submit'])) {
 		</div>
 	</div>
 </div>
+<?php echo $done;?>
 <div id="form">
-<form method="POST" action="">
-	<div class="finfo">
-		<div class="info">student id</div>
-		<input type="text" value="<?php echo $studetid; ?>" class="field" name="studentid" required/>
-	</div>
+<form method="POST" action="" data-parsley-validate enctype="multipart/form-data">
 	<div class="finfo">
 		<div class="info">first name</div>
-		<input type="text" value="<?php echo $fname; ?>" class="field" name="fname" required/>
+		<input type="text" value="<?php echo $fname; ?>" class="field" name="fname" required=""/>
 	</div>
 	<div class="finfo">
 		<div class="info">last name</div>
-		<input type="text" value="<?php echo $lname; ?>" class="field" name="lname" required/>
+		<input type="text" value="<?php echo $lname; ?>" class="field" name="lname" required=""/>
 	</div>
 	<div class="finfo">
 		<div class="info">middle name</div>
@@ -271,7 +326,7 @@ if (isset($_POST['submit'])) {
 			</select>
 		 </div>
 		 <div>
-			<select class="day" required>
+			<select class="day" name="year" required>
 			 <option value="">year</option>
 			 <?php echo $dobyr;?>
 			</select>
@@ -281,7 +336,7 @@ if (isset($_POST['submit'])) {
 	<div class="finfo">
 		<div class="info">gender</div>
 		<div>
-			<select style="width:405px;margin-left:0px;" class="day" name="year" required>
+			<select style="width:405px;margin-left:0px;" class="day" name="gender" required>
 			 <?php echo $gender;?>
 			 <option value="m">male</option>
 			 <option value="f">female</option>
@@ -292,7 +347,7 @@ if (isset($_POST['submit'])) {
 		<div class="info">marital status</div>
 		<div>
 			<select style="width:405px;margin-left:0px;" class="day" name="mstatus" required>
-				<option value=""><?php echo $amstatus;?></option>
+				<?php echo $optionmad;?>
 				<?php echo $options;?>
 			</select>
 		</div>
@@ -301,7 +356,7 @@ if (isset($_POST['submit'])) {
 		<div class="info">nationality</div>
 		<div>
 			<select style="width:405px;margin-left:0px;" class="day" name="nationality" required>
-			<option value=""><?php echo $nation;?></option>
+			<option value="<?php echo $nationality;?>"><?php echo $nation;?></option>
 			<?php echo $option;?>
 			</select>
 		</div>
@@ -312,24 +367,11 @@ if (isset($_POST['submit'])) {
 	</div>
 	<div class="finfo">
 		<div class="info">email</div>
-		<input type="text" value="<?php echo $email; ?>" class="field" name="email" required/>
+		<input type="text" value="<?php echo $email; ?>" class="field" name="email" data-parsley-type="email" required/>
 	</div>
 	<div class="finfo">
 		<div class="info">residential address</div>
 		<input type="text" value="<?php echo $address; ?>" class="field" name="address" required/>
-	</div>
-	<div class="finfo">
-		<div class="info">name of institution</div>
-		<div>
-			<select style="width:405px;margin-left:0px;" class="day" name="institution" required>
-			<option value=""><?php echo $inst;?></option>
-			<?php echo $option1;?>
-			</select>
-		</div>
-	</div>
-	<div class="finfo">
-		<div class="info">program</div>
-		<input type="text" value="<?php echo $program; ?>" class="field" name="program" required/>
 	</div>
 	<div class="finfo">
 		<div class="info">name of next of kin</div>
@@ -337,7 +379,7 @@ if (isset($_POST['submit'])) {
 	</div>
 	<div class="finfo">
 		<div class="info">kin's phone number</div>
-		<input type="text" class="field" name="kinsp" required/>
+		<input type="text" class="field" name="kinsp" data-parsley-type="digits"  required/>
 	</div>
 	<div class="finfo">
 		<div class="info">relationship</div>
@@ -345,29 +387,7 @@ if (isset($_POST['submit'])) {
 	</div>
 	<div class="finfo">
 		<div class="info">kin's email</div>
-		<input type="text" class="field" name="kinsemail" required/>
-	</div>
-	<div class="finfo">
-		<div class="info">are you on study leave?</div>
-		<div class="field">
-		 <div class="yes">
-		 	<input type="radio" style="float:left;margin-top:13px;" name="study1" />
-		 	<span style="float:left;margin-top:7px;">yes</span>
-		 </div>
-		 <div class="yes">
-		 	<input type="radio" style="float:left;margin-top:13px;" name="study1" />
-		 	<span style="float:left;margin-top:7px;">no</span>
-		 </div>
-		 <div class="yes"></div>
-		</div>
-	</div>
-	<div class="finfo">
-		<div class="info">if yes, organization working with</div>
-		<input type="text" class="field" name="organization" />
-	</div>
-	<div class="finfo">
-		<div class="info">contact tel no</div>
-		<input type="text" class="field" name="contacttel" />
+		<input type="text" class="field" name="kinsemail" data-parsley-type="email"  required/>
 	</div>
 	<div class="finfo">
 		<span style="margin:0 auto;">select in order of priority the regions you wish to be considered for the national service posting.</span>
@@ -387,38 +407,22 @@ if (isset($_POST['submit'])) {
 			<?php echo $regi;?>
 		</select>
 	</div>
+	<?php echo $error;?>
 	<div class="finfo">
 		<span style="margin:0 auto;">select three(3) from the following options.</span>
 	</div>
 	<div class="finfo finfo1" >
-     <?php echo $optio;?>
-	</div>
-		<div class="finfo">
-		<div class="info">do you have any health condition?</div>
-		<div class="field">
-		 <div class="yes">
-		 	<input type="radio" style="float:left;margin-top:13px;" name="study2" />
-		 	<span style="float:left;margin-top:7px;">yes</span>
-		 </div>
-		 <div class="yes">
-		 	<input type="radio" style="float:left;margin-top:13px;" name="study2" />
-		 	<span style="float:left;margin-top:7px;">no</span>
-		 </div>
-		 <div class="yes"></div>
-		</div>
-	</div>
-	<div class="finfo">
-		<div class="info">if yes, name of condition</div>
-		<input type="text" class="field" name="hcondition" />
+     <fieldset data-parsley-mincheck="3" data-parsley-maxcheck="3"><?php echo $optio;?></fieldset>
 	</div>
 	<div class="finfo">
 		<div class="info">photograph</div>
 		<input type="file" class="field" name="photograph" required/>
 	</div>
+	<?php echo $img1error;?>
 	<div class="finfo">
 		<span style="margin:0 auto;color:red;">the secretariat is not bound to post service personnel to regions or service of their preference!!!.</span>
 	</div>
-	<button type="submit" class="sub">submit</button>
+	<button type="submit" name="submit" class="sub">submit</button>
 </form>
 </div>
 <div style="height:77px;float:left;" id="footercnt"></div>
