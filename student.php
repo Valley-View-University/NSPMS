@@ -1,14 +1,10 @@
 <?php
-
+require 'inc/connect.php';
+require 'inc/clean.inc';
 session_start();
 
 if (empty($_SESSION['sid']) == false) {
 	header("Location:student_form.php");
-}
-
-$link = mysqli_connect('localhost','root', '', 'nspms');
-if (!$link) {
-    die('Could not connect: ' . mysql_error());
 }
 
 $loge= 0;$error ='';

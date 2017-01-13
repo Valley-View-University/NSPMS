@@ -12,6 +12,11 @@ else if(isset($_SESSION['sid']) == true){
 	session_destroy();
 	header ('location: ../index.php');
 }
+else if(isset($_SESSION['cid']) == true){
+	unset($_SESSION['cid']);
+	session_destroy();
+	header ('location: ../company.php');
+}
 
 	
 	

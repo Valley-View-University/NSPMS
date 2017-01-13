@@ -1,10 +1,13 @@
 <?php
-
+require 'inc/connect.php';
+require 'inc/clean.inc';
 session_start();
 
 if(empty($_SESSION['aid']) == true) {
 	header("Location:admin.php");
 }
+
+$studgtq = mysqli_query($link, "");
 
 ?>
 
@@ -24,5 +27,6 @@ if(empty($_SESSION['aid']) == true) {
 		</div>
 	</div>
 </div>
+
 </body>
 </html>

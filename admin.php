@@ -2,6 +2,10 @@
 session_start();
 require 'inc/connect.php';
 
+if(empty($_SESSION['aid']) == false) {
+    header("Location:admin_hub.php");
+}
+
 $loge= 0;$error ='';
 if(isset($_POST['submit'])){
 	$username = $_POST['username'];
