@@ -10,7 +10,6 @@ if (empty($_SESSION['sid']) == false) {
 $loge= 0;$error ='';
 
 if (isset($_POST['submit'])) {
-	
 
 $studentid = $_POST['studentid'];
 $vouchernum = $_POST['vouchernum'];
@@ -26,28 +25,30 @@ $vouchernum = $_POST['vouchernum'];
      
      $query = mysqli_query($link, "SELECT sid FROM studentinfo WHERE studentid='$studentid' ");
      $qresult = mysqli_num_rows($query);
-     $srow = mysqli_fetch_assoc($query);
+     
 
      if ($qresult == 1) {
-
-     $vouchernum = md5($vouchernum);
-     $query1 = mysqli_query($link, "SELECT vid FROM voucher WHERE code='$vouchernum' ");
-     $qresult1 = mysqli_num_rows($query1);
-     $vrow = mysqli_fetch_assoc($query1);
+        $srow = mysqli_fetch_assoc($query);
+         $vouchernum = md5($vouchernum);
+         $query1 = mysqli_query($link, "SELECT vid FROM voucher WHERE code='$vouchernum' ");
+         $qresult1 = mysqli_num_rows($query1);
 
      if ($qresult1 == 1) {
-
-     	$sidx = $srow['sid'];
-     	$vidx = $vrow['vid'];
+            $vrow = mysqli_fetch_assoc($query1);
+         	$sidx = $srow['sid'];
+         	$vidx = $vrow['vid'];
 
      	$fsql = mysqli_query($link, "UPDATE voucher SET sid='$sidx' WHERE vid='$vidx' ");
 
-     	if ($fsql == true) {
+     	if ($fsql) {
      		 $_SESSION['sid'] = $sidx;
              header("Location: student_form.php");
      	}
 
      }
+     else{
+        $error .= "invalid studentid or voucher code";
+    }
     
     }
     else{
@@ -86,7 +87,7 @@ $vouchernum = $_POST['vouchernum'];
 			<div id="one"><input name="studentid" type="text" placeholder="student id" class="stdntf" required/></div>
 		</div>
 		<div style="margin-top:20px;" class="studntidf">
-			<div id="one"><input name="vouchernum" type="text" placeholder="voucher code"class="stdntf" required/></div>
+			<div id="one"><input name="vouchernum" type="password" placeholder="voucher code"class="stdntf" required/></div>
 		</div>
 		<div style="color:red; margin-top:10px;" id="one"><?php echo $error;?></div>
 		<div id="one"><button name="submit" id="submit"type="submit">submit</button></div>
