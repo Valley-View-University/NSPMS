@@ -16,11 +16,10 @@ $query1 = mysqli_query($link, "SELECT * FROM posting WHERE sid='$sid' ");
 $numr = mysqli_num_rows($query1);
 
 if ($numr == 0) {
-	$result = "Posting Not Yet Available";
+	$result = '<span style="float:left;width:100%;text-align:center;margin:50px 0;">Posting Not Yet Available</span>';
 }
 else{
 	$rquerry = mysqli_fetch_assoc($query1);
-	$sid = $rq['sid'];
     $sq = mysqli_query($link,"SELECT * FROM studentinfo WHERE sid='$sid'");
     $rsq = mysqli_fetch_assoc($sq);
     $fname = $rsq['fname'].' '.$rsq['mname'].' '.$rsq['lname'];
@@ -34,24 +33,29 @@ else{
 	else{
 		$gender = 'Female';
 	}
-    $institution = $rsq['instituition'];
+    $intid = $rsq['instituition'];
+    $insqt = mysqli_query($link, "SELECT sname FROM school WHERE shid='$intid' ");
+    $inrw = mysqli_fetch_assoc($insqt);
+    $institution = $inrw['sname'];
+
     $avatar = $rsq['avatar'];
 
 
-	$rid = $rq['rid'];
+	$rid = $rquerry['rid'];
 	$rq = mysqli_query($link,"SELECT * FROM region WHERE rid='$rid'");
     $rqr = mysqli_fetch_assoc($rq);
     $rname = $rqr['rname'];
 
-	$oid = $rq['oid'];
+	$oid = $rquerry['oid'];
 	$oq = mysqli_query($link,"SELECT * FROM options WHERE `oid`='$oid'");
-    $oqr = mysqli_fetch_assoc($rq);
-    $options = $rqr['options'];
+    $oqr = mysqli_fetch_assoc($oq);
+    $options = $oqr['options'];
 
-	$cid = $rq['cid'];
+	$cid = $rquerry['cid'];
 	$cq = mysqli_query($link,"SELECT * FROM company WHERE `cid`='$cid'");
-    $cqr = mysqli_fetch_assoc($rq);
-    $cname = $rqr['cname'];
+    $cqr = mysqli_fetch_assoc($cq);
+    $cname = $cqr['cname'];
+
 
     $result = '<img src="avatar/'.$avatar.'" style="height:300px;width:300px; background-size:100%; float:left;" />
     			<div class="finfo">

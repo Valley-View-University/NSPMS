@@ -20,46 +20,49 @@ if(isset($_POST['enroll'])){
 		while ($sqr = mysqli_fetch_array($alstq, MYSQLI_ASSOC)) {
 			$sid = $sqr['sid'];
 			$gsrq = mysqli_query($link, "SELECT * FROM student_request WHERE sid='$sid' ");
-			$gr = mysqli_fetch_assoc($gsrq);
-			$option1 = $gr['option1'];
-			$option2 = $gr['option2'];
-			$option3 = $gr['option3'];
+			$xzc = mysqli_num_rows($gsrq);
+			if($xzc != 0){
+				$gr = mysqli_fetch_assoc($gsrq);
+				$option1 = $gr['option1'];
+				$option2 = $gr['option2'];
+				$option3 = $gr['option3'];
 
-			$region1 = $gr['region1'];
-			$region2 = $gr['region2'];
-			$region3 = $gr['region3'];
+				$region1 = $gr['region1'];
+				$region2 = $gr['region2'];
+				$region3 = $gr['region3'];
 
-			$offer = getpost($link, $region1, $option1);
-			if($offer != 0){
-				$pstq = mysqli_query($link, "INSERT INTO posting(`sid`,`cid`,`rid`,`oid`,`added`) VALUES('$sid','$offer','$region1','$option1',now()) ");
-				$studentax++;
-			}
-			else{
-				$offer = getpost($link, $region2, $option2);
+				$offer = getpost($link, $region1, $option1);
 				if($offer != 0){
-					$pstq = mysqli_query($link, "INSERT INTO posting(`sid`,`cid`,`rid`,`oid`,`added`) VALUES('$sid','$offer','$region2','$option2',now()) ");
+					$pstq = mysqli_query($link, "INSERT INTO posting(`sid`,`cid`,`rid`,`oid`,`added`) VALUES('$sid','$offer','$region1','$option1',now()) ");
 					$studentax++;
 				}
 				else{
-					$offer = getpost($link, $region3, $option3);
+					$offer = getpost($link, $region2, $option2);
 					if($offer != 0){
-						$pstq = mysqli_query($link, "INSERT INTO posting(`sid`,`cid`,`rid`,`oid`,`added`) VALUES('$sid','$offer','$region3','$option3',now()) ");
+						$pstq = mysqli_query($link, "INSERT INTO posting(`sid`,`cid`,`rid`,`oid`,`added`) VALUES('$sid','$offer','$region2','$option2',now()) ");
 						$studentax++;
 					}
 					else{
-						$offer = randpost($link);
+						$offer = getpost($link, $region3, $option3);
 						if($offer != 0){
-							$offerhd = explode('|',$offer);
-							$cidx = $offerhd[0];
-							$oidx = $offerhd[1];
-
-							$gridq = mysqli_query($link, "SELECT rid FROM company WHERE cid='$cidx' ");
-							$rw = mysqli_fetch_assoc($gridq);
-							$rid = $rw['rid'];
-							$pstq = mysqli_query($link, "INSERT INTO posting(`sid`,`cid`,`rid`,`oid`,`added`) VALUES('$sid','$cidx','$rid','$oidx',now()) ");
+							$pstq = mysqli_query($link, "INSERT INTO posting(`sid`,`cid`,`rid`,`oid`,`added`) VALUES('$sid','$offer','$region3','$option3',now()) ");
 							$studentax++;
 						}
-						
+						else{
+							$offer = randpost($link);
+							if($offer != 0){
+								$offerhd = explode('|',$offer);
+								$cidx = $offerhd[0];
+								$oidx = $offerhd[1];
+
+								$gridq = mysqli_query($link, "SELECT rid FROM company WHERE cid='$cidx' ");
+								$rw = mysqli_fetch_assoc($gridq);
+								$rid = $rw['rid'];
+								$pstq = mysqli_query($link, "INSERT INTO posting(`sid`,`cid`,`rid`,`oid`,`added`) VALUES('$sid','$cidx','$rid','$oidx',now()) ");
+								$studentax++;
+							}
+							
+						}
 					}
 				}
 			}
@@ -108,7 +111,7 @@ function randpost($link){
 <div id="runner">
 	<div id="contbx">
 		<div id="topbanner">
-			<a href="student_form.php"><div id="logobx"></div></a>
+			<a href="admin_hub.php"><div id="logobx"></div></a>
 			<a href="inc/logout.php"><button class="log" name="logout" type="submit">Logout</button></a>
 		</div>
 	</div>

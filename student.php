@@ -29,16 +29,17 @@ $vouchernum = $_POST['vouchernum'];
 
      if ($qresult == 1) {
         $srow = mysqli_fetch_assoc($query);
+            $sidx = $srow['sid'];
          $vouchernum = md5($vouchernum);
-         $query1 = mysqli_query($link, "SELECT vid FROM voucher WHERE code='$vouchernum' ");
+         $query1 = mysqli_query($link, "SELECT vid FROM voucher WHERE (code='$vouchernum' AND status='0') OR (sid='$sidx' AND code='$vouchernum') ");
          $qresult1 = mysqli_num_rows($query1);
 
      if ($qresult1 == 1) {
             $vrow = mysqli_fetch_assoc($query1);
-         	$sidx = $srow['sid'];
+         	
          	$vidx = $vrow['vid'];
 
-     	$fsql = mysqli_query($link, "UPDATE voucher SET sid='$sidx' WHERE vid='$vidx' ");
+     	$fsql = mysqli_query($link, "UPDATE voucher SET sid='$sidx',status='1' WHERE vid='$vidx' ");
 
      	if ($fsql) {
      		 $_SESSION['sid'] = $sidx;
@@ -47,12 +48,12 @@ $vouchernum = $_POST['vouchernum'];
 
      }
      else{
-        $error .= "invalid studentid or voucher code";
+        $error .= "invalid voucher code";
     }
     
     }
     else{
-    	$error .= "invalid studentid or voucher code";
+    	$error .= "invalid studentid ";
     }
 
    }

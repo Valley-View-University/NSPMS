@@ -73,7 +73,7 @@ if ($rmars2!=0) {
 	$qresult = mysqli_num_rows($query);
 	$result = mysqli_fetch_assoc($query);
 
-	$studetid = $result['studentid'];
+	$studentid = $result['studentid'];
 	$fname = $result['fname'];
 	$lname = $result['lname'];
 	$mname = $result['mname'];
@@ -98,6 +98,9 @@ if ($rmars2!=0) {
 	while ($mstatus = mysqli_fetch_array($aquery, MYSQLI_ASSOC)) {
 		$optionmad= '<option value="'.$mstatus['msid'].'">'.$mstatus['status'].'</option>';
 	}
+		}
+		else{
+			$optionmad= '<option value="">-Select marital status-</option>';
 		}
 
     $nationality = $result['nid'];
@@ -163,7 +166,7 @@ if(empty($photograph) == false){
     else{
 
     	$avartar = uploadimage($link,$photograph,$phototemp);
-    	if ($avartar == 0) {
+    	if ($avartar == '0') {
     		$nwavat = NULL;
     	}
     	else{
@@ -190,8 +193,20 @@ if(empty($photograph) == false){
     		}
     		$deq = mysqli_query($link,"DELETE FROM student_request WHERE sid='$sid'");
     		$querry2 = mysqli_query($link,"INSERT INTO student_request(`sid`,`region1`,`region2`,`region3`,`option1`,`option2`,`option3`,`added`) VALUES('$sid','$region1','$region2','$region3','$option1x','$option2x','$option3x',now())");
+ 
+            $stdntid = md5($studentid); 
 
-    		if ($querry2) {
+            $nscode = "NSS".$yearx.rand(1000,9999);
+
+            $depq = mysqli_query($link,"DELETE FROM personnel WHERE sid='$sid'");
+            $querry3 = mysqli_query($link,"INSERT INTO personnel(`nscode`,`sid`,`password`) VALUES('$nscode','$sid','$stdntid')");
+         	$key = 'ElSFNrnsozXAU1yhpxN5i0qms';
+         	$message = 'Your NSS login are (NS Code:'.$nscode.') (Password: '.$stdntid.')';
+         	$sender_id = 'NSS';
+         	$phone = '233'.substr($phone,1,15);;
+         	 $url = "https://apps.mnotify.net/smsapi?key=$key&to=$phone&msg=$message&sender_id=$sender_id";
+
+    		if ($querry3) {
     			$done = '<span style="color:green;font-size:25px;width: 100%;text-align: center;float: left;">successful</span>';
     		}
     		else{

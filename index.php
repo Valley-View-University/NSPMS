@@ -67,10 +67,10 @@ if (empty($_SESSION['sid']) == false) {
 		<div class="qltopbx"><span class="linkicon regicon"></span></div>
 		<div class="qlinkname"><span>Enroll</span></div>
 	</div></a>
-	<div class="qlinkbx">
+	<a href="check.php"><div class="qlinkbx">
 		<div class="qltopbx"><span class="linkicon checkpost"></span></div>
 		<div class="qlinkname"><span>Check Postings</span></div>
-	</div>
+	</div></a>
 	<a href="company.php"><div class="qlinkbx">
 		<div class="qltopbx"><span class="linkicon company"></span></div>
 		<div class="qlinkname"><span>Company Sign in</span></div>

@@ -71,9 +71,9 @@ $errorx=$options ='';
                     else{
                       $genderx = "f";
                     }
-                    $address = $filesop[9];
+                    $address = $filesop[8];
 
-                    $insertion = mysqli_query($link,"INSERT INTO studentinfo(studentid,fname,mname,lname,program,email,phonenum,gender,resaddress,instituition,year) VALUES(' $studentid',' $f_name','$middle_name', '$last_name','$program','$email','$contact','$genderx','$address','$school','$year')");
+                    $insertion = mysqli_query($link,"INSERT INTO studentinfo(studentid,fname,mname,lname,program,email,phonenum,gender,resaddress,instituition,year) VALUES('$studentid','$f_name','$middle_name', '$last_name','$program','$email','$contact','$genderx','$address','$school','$year')");
                     if($insertion){
                       $count++;
                     }
